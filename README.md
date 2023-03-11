@@ -35,7 +35,7 @@ To keep everything working, do not remove `<!-- ... -->` sections.
   Download the [latest release](https://github.com/hanqyu/plugin-test/releases/latest) and install it manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
-
+test2
 ---
 Plugin based on the [IntelliJ Platform Plugin Template][template].
 
