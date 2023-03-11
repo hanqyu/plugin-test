@@ -30,6 +30,7 @@ To keep everything working, do not remove `<!-- ... -->` sections.
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "plugin-test"</kbd> >
   <kbd>Install Plugin</kbd>
   
+test3
 - Manually:
 
   Download the [latest release](https://github.com/hanqyu/plugin-test/releases/latest) and install it manually using
