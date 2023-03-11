@@ -11,4 +11,4 @@ jobs:
       - name: Comment on PR
         uses: tiwanari/list-merged-pull-requests@master
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.GITHUB_TOKEN }}
