@@ -1,0 +1,35 @@
+name: Generate PR List
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+
+
+jobs:
+  generate-pr-list:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get PR list
+        run: |
+          if [ ${{ github.event_name }} = 'push' ]; then
+            PR_LIST=$(git log --merges --pretty=format:"%s (%b)" HEAD..origin/master | grep -iE 'Merge pull request #[0-9]+ from |cherry-pick from ')
+          else
+            PR_LIST=$(git log --merges --pretty=format:"%s (%b)" HEAD^..HEAD | grep -iE 'Merge pull request #[0-9]+ from |cherry-pick from ')
+          fi
+          for PR_NUMBER in $(git log --merges --pretty=format:"%b" HEAD..origin/master | grep -iE 'Merge pull request #[0-9]+ from ' | grep -oE '#[0-9]+' | grep -oE '[0-9]+'); do
+            PR_LIST="$PR_LIST\n- (from PR #$PR_NUMBER)"
+          done
+          echo "::set-output name=pr_list::$(echo -e "$PR_LIST")"
+      - name: Comment on PR
+        uses: unsplash/comment-on-pr@v1
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: |
+            PR list:
+            ${{ steps.generate-pr-list.outputs.pr_list }}
+          delete-previous: true
