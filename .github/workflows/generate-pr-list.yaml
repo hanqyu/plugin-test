@@ -20,7 +20,7 @@ jobs:
             HEAD=$(git rev-parse ${{ github.head_ref }})
             PR_LIST=$(git log --merges --pretty=format:"%s (%b)" $BASE..$HEAD | grep -iE 'Merge pull request #[0-9]+ from |cherry-pick from ')
           fi
-          for PR_NUMBER in $(git log --merges --pretty=format:"%b" HEAD..origin/master | grep -iE 'Merge pull request #[0-9]+ from ' | grep -oE '#[0-9]+' | grep -oE '[0-9]+'); do
+          for PR_NUMBER in $(git log --merges --pretty=format:"%b" HEAD..origin/${{ github.head_ref }} | grep -iE 'Merge pull request #[0-9]+ from ' | grep -oE '#[0-9]+' | grep -oE '[0-9]+'); do
             PR_LIST="$PR_LIST\n- (from PR #$PR_NUMBER)"
           done
           echo "::set-output name=pr_list::$(echo -e "$PR_LIST")"
@@ -30,7 +30,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          message: |
-            PR list:
+          msg: |
+            [PR list]:
             ${{ steps.generate-pr-list.outputs.pr_list }}
-          delete-previous: true
+          delete_prev_regex_msg: '\[PR list\]'
