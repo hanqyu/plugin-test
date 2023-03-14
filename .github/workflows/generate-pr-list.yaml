@@ -6,8 +6,7 @@ on:
     branches:
       - main
 
-permissions:
-  issues: write
+permissions: write-all
 
 jobs:
   generate-pr-list:
@@ -17,7 +16,7 @@ jobs:
       - name: Get PR list
         run: |
           HEAD=$(git rev-parse HEAD)
-          BASE=$(git rev-parse origin/main)
+          BASE=$(git rev-parse {{ github.base_ref }})
           
           PR_LIST=$(git log --pretty=format:"%s" $BASE..$HEAD | grep -iE '#[0-9]+')
           COMMENT=''
