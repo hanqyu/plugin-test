@@ -24,7 +24,7 @@ jobs:
           done
           echo "::set-output name=pr_list::$(echo -e "$PR_LIST")"
       - name: Comment on PR
-        uses: unsplash/comment-on-pr@v1
+        uses: unsplash/comment-on-pr@v1.3.0
         if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
